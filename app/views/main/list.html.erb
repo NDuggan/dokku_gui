@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Proc</th>
+      <th>ID</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @output.each do |app| %>
+      <tr>
+        <td><%= app[0] %></td>
+        <td><%= app[1] %></td>
+        <td><%= app[2] %></td>
+        <td><%= content_tag :span, app[3], class: "label label-#{ app[3] == "running" ? "success" : "danger" }" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
