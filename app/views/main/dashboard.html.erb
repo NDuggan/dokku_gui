@@ -1,0 +1,11 @@
+<h3>CPU</h3>
+<%= pluralize @cpu, "Core" %>
+
+<h3>RAM</h3>
+<%= number_to_human_size @memory %>
+
+<h3>Docker version</h3>
+<%= @docker_version %>
+
+<h3>Dokku version</h3>
+<%= @dokku_version %>
