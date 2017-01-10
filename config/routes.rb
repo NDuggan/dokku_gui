@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'main#dashboard'
 
-  get :apps, controller: :main
-  get :list, controller: :main
+  resources :apps, param: :app_name
+  resources :containers, param: :app_name
 end

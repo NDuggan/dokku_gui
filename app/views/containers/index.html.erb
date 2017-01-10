@@ -1,4 +1,4 @@
-<h1 class="page-header">Running processes</h1>
+<h1 class="page-header">Your containers</h1>
 
 <div class="table-responsive">
   <table class="table table-striped table-hover">
@@ -17,6 +17,12 @@
           <td><%= app[1] %></td>
           <td><%= app[2] %></td>
           <td><%= content_tag :span, app[3], class: "label label-#{ app[3] == "running" ? "success" : "danger" }" %></td>
+        </tr>
+      <% end %>
+
+      <% unless @output.any? %>
+        <tr>
+          <td colspan="2"><em>You currently have no active procs to display.</em></td>
         </tr>
       <% end %>
     </tbody>
