@@ -35,7 +35,10 @@
     <tbody>
       <% @output.each do |app| %>
         <tr>
-          <td><%= app %></td>
+          <td>
+            <%= content_tag :span, app %>
+            <%= link_to fa_icon("fw lg pencil"), "#", data: { app: app, state: "read" } %>
+          </td>
           <td>
             <%= link_to fa_icon("remove"), app_path(app_name: app), class: "destroy-app btn btn-sm btn-danger", method: :delete, data: { confirm: "Are you sure you want to delete this app?" } %>
           </td>

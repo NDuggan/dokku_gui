@@ -37,4 +37,19 @@ class AppsController < ApplicationController
       redirect_to apps_path, error: "App #{app_name} could not be deleted"
     end
   end
+
+  def rename
+    old_app_name = params[:old_app_name]
+    new_app_name = params[:new_app_name]
+
+    ssh_connect do |ssh|
+      @output = ssh.exec!("dokku apps:rename #{old_app_name} #{new_app_name}")
+    end
+
+    if @output[/Renaming #{old_app_name} to #{new_app_name}... done/]
+      render json: :ok
+    else
+      render json: :error, status: :unprocessable_entity
+    end
+  end
 end
