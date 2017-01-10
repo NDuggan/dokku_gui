@@ -1,0 +1,20 @@
+<% if flash.any? %>
+  <% flash.select{|k,v| %w{error failure danger info notice success alert warning}.include?(k)}.each do |type, msg| %>
+    <div class="alert alert-<%= flash_class(type) %> alert-dismissible m-t-sm m-b-sm" data-alert="true">
+      <% unless flash[:important] %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      <% end %>
+      <% if msg.is_a? Array %>
+        <% msg.each do |message| %>
+          <ul>
+            <li><%= message %></li>
+          </ul>
+        <% end %>
+      <% else %>
+        <%= msg %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
