@@ -4,8 +4,8 @@ $(document).on('turbolinks:load', function() {
     $("#app_name").focus();
   });
 
-  // Submit with enter
-  $("#app_name").keypress(function(e){
+  // Submit create with enter
+  $("#app_name").keyup(function(e){
     if (e.which == 13 || e.keyCode == 13) {
       $("#create-app").click();
     }
@@ -55,6 +55,19 @@ $(document).on('turbolinks:load', function() {
           $this.siblings(".app-rename").select();
           $this.children("i.fa").addClass("fa-check text-success").removeClass("fa-spin fa-spinner");
         });
+    }
+  });
+
+  // Submit rename with enter
+  $("body").on("keyup", ".app-rename", function(e){
+    var $submit = $(this).siblings("a");
+    if (e.which == 13 || e.keyCode == 13) {
+      $submit.click();
+    } else if (e.which == 27 || e.keyCode == 27) {
+      $submit.data("state", "read");
+      $submit.siblings("span").text($submit.siblings(".app-rename").val()).show();
+      $submit.children("i.fa").addClass("fa-pencil").removeClass("fa-spin fa-spinner text-success");
+      $submit.siblings(".app-rename").remove();
     }
   });
 });
