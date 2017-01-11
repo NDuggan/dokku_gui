@@ -1,5 +1,11 @@
 <ul class="nav nav-sidebar">
-  <li class="active"><%= link_to fa_icon("fw dashboard", text: "Home (current)"), root_path %></li>
-  <li><%= link_to fa_icon("fw rocket", text: "Apps"), apps_path %></li>
-  <li><%= link_to fa_icon("fw server", text: "Containers"), containers_path %></li>
+  <li class="<%= "active" if is_active_controller('main') && is_active_action('dashboard') %>">
+    <%= link_to fa_icon("fw dashboard", text: "Dashboard"), root_path %>
+  </li>
+  <li class="<%= "active" if is_active_controller('apps') %>">
+    <%= link_to fa_icon("fw rocket", text: "Apps"), apps_path %>
+  </li>
+  <li class="<%= "active" if is_active_controller('containers') %>">
+    <%= link_to fa_icon("fw server", text: "Containers"), containers_path %>
+  </li>
 </ul>
