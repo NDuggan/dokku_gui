@@ -11,7 +11,7 @@
     <tbody>
       <% @output.each do |config| %>
         <tr>
-          <td><%= config[0].delete(":") %></td>
+          <td><%= config[0] %></td>
           <td><%= config[1] %></td>
         </tr>
       <% end %>
