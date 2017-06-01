@@ -6,6 +6,7 @@
       <tr>
         <th>Key</th>
         <th>Value</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -13,11 +14,12 @@
         <tr>
           <td><%= config[0] %></td>
           <td><%= config[1] %></td>
+          <td><%= link_to fa_icon("remove"), config_path(app_name: @app_name, config_key: config[0]), class: "destroy-config btn btn-sm btn-danger", remote: true, method: :delete, data: { confirm: "Are you sure you want to delete this config var?" } %></td>
         </tr>
       <% end %>
 
       <% unless @output.any? %>
-        <tr><td colspan="2">No config vars to display.</td></tr>
+        <tr><td colspan="3">No config vars to display.</td></tr>
       <% end %>
     </tbody>
   </table>

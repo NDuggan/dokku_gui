@@ -13,6 +13,21 @@ class ConfigController < ApplicationController
     end
   end
 
+  def destroy
+    config_key = params[:config_key]
+
+    @output = []
+    ssh_connect do |ssh|
+     @output = ssh.exec!("dokku config:unset --no-restart #{@app_name} #{config_key}")
+    end
+
+    if @output[/-----> Unsetting #{config_key}/]
+      render json: :ok
+    else
+      render json: :error, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_app_name
