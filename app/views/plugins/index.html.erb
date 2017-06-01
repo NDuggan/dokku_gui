@@ -24,18 +24,18 @@
         </tr>
       </thead>
       <tbody>
-        <% plugins.each do |app| %>
+        <% plugins.each do |plugin| %>
           <tr>
             <% unless group.present? %>
               <td>
-                <%= link_to fa_icon("lg toggle-#{app[2] == "enabled" ? "on" : "off"}"), public_send("#{app[2] == "enabled" ? "disable" : "enable"}_plugin_path", plugin_name: app[0]), remote: true, method: :patch, class: "toggle-plugin" unless app[3][/^dokku core/] %>
+                <%= link_to fa_icon("lg toggle-#{plugin[2] == "enabled" ? "on" : "off"}"), public_send("#{plugin[2] == "enabled" ? "disable" : "enable"}_plugin_path", plugin_name: plugin[0]), remote: true, method: :patch, class: "toggle-plugin" unless plugin[3][/^dokku core/] %>
                   
               </td>
             <% end %>
-            <td><%= app[0] %></td>
-            <td><%= app[1] %></td>
-            <td><%= content_tag :span, app[2].humanize.upcase, class: "label label-#{ app[2] == "enabled" ? "success" : "danger" }" %></td>
-            <td><%= app[3] %></td>
+            <td><%= plugin[0] %></td>
+            <td><%= plugin[1] %></td>
+            <td><%= content_tag :span, plugin[2].humanize.upcase, class: "label label-#{ plugin[2] == "enabled" ? "success" : "danger" }" %></td>
+            <td><%= plugin[3] %></td>
           </tr>
         <% end %>
 
