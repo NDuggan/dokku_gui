@@ -8,39 +8,44 @@
   </div>
 </div>
 
-<div class="table-responsive">
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Version</th>
-        <th>Status</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @output.group_by {|p| p[3][/^dokku core/]}.reverse_each do |group, plugins| %>
-        <tr><td colspan="5"><h4><%= group.present? ? "Dokku Core" : "Community (Yours)" %></h4><td><tr>
+<% @output.group_by {|p| p[3][/^dokku core/]}.reverse_each do |group, plugins| %>
+  <h4><%= group.present? ? "Dokku Core" : "Community (Yours)" %></h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <% unless group.present? %>
+            <th></th>
+          <% end %>
+          <th>Name</th>
+          <th>Version</th>
+          <th>Status</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
         <% plugins.each do |app| %>
           <tr>
-            <td>
-              <%= link_to fa_icon("lg toggle-#{app[2] == "enabled" ? "on" : "off"}"), public_send("#{app[2] == "enabled" ? "disable" : "enable"}_plugin_path", plugin_name: app[0]), remote: true, method: :patch, class: "toggle-plugin" unless app[3][/^dokku core/] %>
-                
-            </td>
+            <% unless group.present? %>
+              <td>
+                <%= link_to fa_icon("lg toggle-#{app[2] == "enabled" ? "on" : "off"}"), public_send("#{app[2] == "enabled" ? "disable" : "enable"}_plugin_path", plugin_name: app[0]), remote: true, method: :patch, class: "toggle-plugin" unless app[3][/^dokku core/] %>
+                  
+              </td>
+            <% end %>
             <td><%= app[0] %></td>
             <td><%= app[1] %></td>
             <td><%= content_tag :span, app[2].humanize.upcase, class: "label label-#{ app[2] == "enabled" ? "success" : "danger" }" %></td>
             <td><%= app[3] %></td>
           </tr>
         <% end %>
-      <% end %>
 
-      <% unless @output.any? %>
-        <tr>
-          <td colspan="2"><em>You currently have no active plugins to display.</em></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+        <% unless plugins.any? %>
+          <tr>
+            <td colspan="5"><em>You currently have no active plugins to display.</em></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <hr>
+<% end %>
