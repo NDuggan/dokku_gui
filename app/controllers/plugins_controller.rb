@@ -8,7 +8,8 @@ class PluginsController < ApplicationController
         @plugin_version = app
         next
       end
-       @output << app.split(" ", 4).flatten
+       attributes = app.split(" ", 4).flatten
+       @output << OpenStruct.new(name: attributes[0], version: attributes[1], status: attributes[2], description: attributes[3])
      end
     end
   end

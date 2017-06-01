@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<% @output.group_by {|p| p[3][/^dokku core/]}.reverse_each do |group, plugins| %>
+<% @output.group_by {|p| p.description[/^dokku core/] }.reverse_each do |group, plugins| %>
   <h4><%= group.present? ? "Dokku Core" : "Community (Yours)" %></h4>
   <div class="table-responsive">
     <table class="table table-striped table-hover">
@@ -28,20 +28,19 @@
           <tr>
             <% unless group.present? %>
               <td>
-                <%= link_to fa_icon("lg toggle-#{plugin[2] == "enabled" ? "on" : "off"}"), toggle_status_plugin_path(plugin[0], plugin[2] == "enabled" ? "disable" : "enable"), remote: true, method: :patch, class: "toggle-plugin" %>
-
+                <%= link_to fa_icon("lg toggle-#{plugin.status == "enabled" ? "on" : "off"}"), toggle_status_plugin_path(plugin.name, plugin.status == "enabled" ? "disable" : "enable"), remote: true, method: :patch, class: "toggle-plugin" %>
               </td>
             <% end %>
-            <td><%= plugin[0] %></td>
-            <td><%= plugin[1] %></td>
-            <td><%= content_tag :span, plugin[2].humanize.upcase, class: "label label-#{ plugin[2] == "enabled" ? "success" : "danger" }" %></td>
-            <td><%= plugin[3] %></td>
+            <td><%= plugin.name %></td>
+            <td><%= plugin.version %></td>
+            <td><%= content_tag :span, plugin.status.humanize.upcase, class: "label label-#{ plugin.status == "enabled" ? "success" : "danger" }" %></td>
+            <td><%= plugin.description %></td>
           </tr>
         <% end %>
 
         <% unless plugins.any? %>
           <tr>
-            <td colspan="5"><em>You currently have no active plugins to display.</em></td>
+            <td colspan="5"><em>You currently have no plugins to display.</em></td>
           </tr>
         <% end %>
       </tbody>
