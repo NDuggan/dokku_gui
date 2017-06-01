@@ -1,7 +1,7 @@
 class ConfigController < ApplicationController
-  def show
-    @app_name = params[:app_name]
+  before_action :set_app_name
 
+  def show
     @output = []
     ssh_connect do |ssh|
      result = ssh.exec!("dokku config #{@app_name}")
@@ -10,5 +10,11 @@ class ConfigController < ApplicationController
        @output << config.split(" ", 2)
      end
     end
+  end
+
+  private
+
+  def set_app_name
+    @app_name = params[:app_name]
   end
 end
