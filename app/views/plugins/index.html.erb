@@ -28,7 +28,11 @@
           <tr>
             <% unless group.present? %>
               <td>
-                <%= link_to fa_icon("lg toggle-#{plugin.status == "enabled" ? "on" : "off"}"), toggle_status_plugin_path(plugin.name, plugin.status == "enabled" ? "disable" : "enable"), remote: true, method: :patch, class: "toggle-plugin" %>
+                <% if plugin.status == "enabled" %>
+                  <%= link_to fa_icon("lg toggle-on"), toggle_status_plugin_path(plugin.name, "disable"), remote: true, method: :patch, class: "toggle-plugin" %>
+                <% else %>
+                  <%= link_to fa_icon("lg toggle-off"), toggle_status_plugin_path(plugin.name, "enable"), remote: true, method: :patch, class: "toggle-plugin" %>
+                <% end %>
               </td>
             <% end %>
             <td><%= plugin.name %></td>
