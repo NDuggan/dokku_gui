@@ -15,7 +15,10 @@
       <%= @plugin_version %>
       <% @output.each do |app| %>
         <tr>
-          <td><%= link_to fa_icon("lg toggle-#{app[2] == "enabled" ? "on" : "off"}"), root_path %></td>
+          <td>
+            <%= link_to fa_icon("lg toggle-#{app[2] == "enabled" ? "on" : "off"}"), public_send("#{app[2] == "enabled" ? "disable" : "enable"}_plugin_path", plugin_name: app[0]), remote: true, method: :patch, class: "toggle-plugin" unless app[3][/^dokku core/] %>
+              
+          </td>
           <td><%= app[0] %></td>
           <td><%= app[1] %></td>
           <td><%= content_tag :span, app[2].humanize.upcase, class: "label label-#{ app[2] == "enabled" ? "success" : "danger" }" %></td>
