@@ -28,7 +28,7 @@
           <tr>
             <% unless group.present? %>
               <td>
-                <%= link_to fa_icon("lg toggle-#{plugin[2] == "enabled" ? "on" : "off"}"), toggle_status_plugin_path(plugin[0], plugin[2] == "enabled" ? "disable" : "enable"), remote: true, method: :patch, class: "toggle-plugin" unless plugin[3][/^dokku core/] %>
+                <%= link_to fa_icon("lg toggle-#{plugin[2] == "enabled" ? "on" : "off"}"), toggle_status_plugin_path(plugin[0], plugin[2] == "enabled" ? "disable" : "enable"), remote: true, method: :patch, class: "toggle-plugin" %>
 
               </td>
             <% end %>
