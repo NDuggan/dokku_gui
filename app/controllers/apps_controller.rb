@@ -2,7 +2,7 @@ class AppsController < ApplicationController
   def index
     @output = []
     ssh_connect do |ssh|
-     result = ssh.exec!('dokku apps')
+     result = ssh.exec!('dokku apps:list')
      result.split("\n").each_with_index do |app, i|
        next if i == 0
        @output << app
