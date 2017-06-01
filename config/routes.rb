@@ -5,4 +5,5 @@ Rails.application.routes.draw do
     post :rename, on: :member
   end
   resources :containers, param: :app_name
+  resources :plugins, param: :app_name
 end
