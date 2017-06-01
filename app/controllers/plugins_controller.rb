@@ -4,7 +4,7 @@ class PluginsController < ApplicationController
     ssh_connect do |ssh|
      result = ssh.exec!('dokku plugin:list')
      result.split("\n").each_with_index do |app, i|
-       if i == 0
+      if i == 0
         @plugin_version = app
         next
       end
