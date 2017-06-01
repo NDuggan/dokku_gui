@@ -1,0 +1,24 @@
+<h1 class="page-header">Config: <%= @app_name %></h1>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @output.each do |config| %>
+        <tr>
+          <td><%= config[0].delete(":") %></td>
+          <td><%= config[1] %></td>
+        </tr>
+      <% end %>
+
+      <% unless @output.any? %>
+        <tr><td colspan="2">No config vars to display.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
