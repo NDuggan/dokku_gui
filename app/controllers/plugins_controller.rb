@@ -13,17 +13,10 @@ class PluginsController < ApplicationController
     end
   end
 
-  def disable
-    toggle_plugin_status(params[:plugin_name], "disable")
-  end
+  def toggle_status
+    plugin_name = params[:plugin_name]
+    state = params[:state]
 
-  def enable
-    toggle_plugin_status(params[:plugin_name], "enable")
-  end
-
-  private
-
-  def toggle_plugin_status(plugin_name, state)
     @output = []
     ssh_connect do |ssh|
       @output = ssh.exec!("sudo dokku plugin:#{state} #{plugin_name}") 

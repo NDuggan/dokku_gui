@@ -7,8 +7,7 @@ Rails.application.routes.draw do
   resources :containers, param: :app_name
   resources :plugins, param: :plugin_name do
     member do
-      patch :enable
-      patch :disable
+      patch ":state", action: :toggle_status, as: :toggle_status
     end
   end
 end
