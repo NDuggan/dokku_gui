@@ -20,17 +20,20 @@
       </tr>
     </thead>
     <tbody>
-      <% @output.each do |app| %>
-        <tr>
-          <td>
-            <%= link_to fa_icon("lg toggle-#{app[2] == "enabled" ? "on" : "off"}"), public_send("#{app[2] == "enabled" ? "disable" : "enable"}_plugin_path", plugin_name: app[0]), remote: true, method: :patch, class: "toggle-plugin" unless app[3][/^dokku core/] %>
-              
-          </td>
-          <td><%= app[0] %></td>
-          <td><%= app[1] %></td>
-          <td><%= content_tag :span, app[2].humanize.upcase, class: "label label-#{ app[2] == "enabled" ? "success" : "danger" }" %></td>
-          <td><%= app[3] %></td>
-        </tr>
+      <% @output.group_by {|p| p[3][/^dokku core/]}.reverse_each do |group, plugins| %>
+        <tr><td colspan="5"><h4><%= group.present? ? "Dokku Core" : "Community (Yours)" %></h4><td><tr>
+        <% plugins.each do |app| %>
+          <tr>
+            <td>
+              <%= link_to fa_icon("lg toggle-#{app[2] == "enabled" ? "on" : "off"}"), public_send("#{app[2] == "enabled" ? "disable" : "enable"}_plugin_path", plugin_name: app[0]), remote: true, method: :patch, class: "toggle-plugin" unless app[3][/^dokku core/] %>
+                
+            </td>
+            <td><%= app[0] %></td>
+            <td><%= app[1] %></td>
+            <td><%= content_tag :span, app[2].humanize.upcase, class: "label label-#{ app[2] == "enabled" ? "success" : "danger" }" %></td>
+            <td><%= app[3] %></td>
+          </tr>
+        <% end %>
       <% end %>
 
       <% unless @output.any? %>
