@@ -14,29 +14,22 @@ class PluginsController < ApplicationController
   end
 
   def disable
-    plugin_name = params[:plugin_name]
-
-    @output = []
-    ssh_connect do |ssh|
-      @output = ssh.exec!("sudo dokku plugin:disable #{plugin_name}") 
-    end
-
-    if @output[/-----> Plugin #{plugin_name} disabled/]
-      render json: :ok
-    else
-      render json: :error, status: :unprocessable_entity
-    end
+    toggle_plugin_status(params[:plugin_name], "disable")
   end
 
   def enable
-    plugin_name = params[:plugin_name]
+    toggle_plugin_status(params[:plugin_name], "enable")
+  end
 
+  private
+
+  def toggle_plugin_status(plugin_name, state)
     @output = []
     ssh_connect do |ssh|
-      @output = ssh.exec!("sudo dokku plugin:enable #{plugin_name}") 
+      @output = ssh.exec!("sudo dokku plugin:#{state} #{plugin_name}") 
     end
 
-    if @output[/-----> Plugin #{plugin_name} enabled/]
+    if @output[/-----> Plugin #{plugin_name} #{state}d/]
       render json: :ok
     else
       render json: :error, status: :unprocessable_entity
