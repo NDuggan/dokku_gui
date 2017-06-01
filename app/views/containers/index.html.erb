@@ -16,7 +16,7 @@
           <td><%= app[0] %></td>
           <td><%= app[1] %></td>
           <td><%= app[2] %></td>
-          <td><%= content_tag :span, app[3], class: "label label-#{ app[3] == "running" ? "success" : "danger" }" %></td>
+          <td><%= content_tag :span, app[3].humanize.upcase, class: "label label-#{ app[3] == "running" ? "success" : "danger" }" %></td>
         </tr>
       <% end %>
 
